@@ -10,6 +10,8 @@ function playIntro(){bgm.play().then(()=>{soundButton.hidden=true}).catch(()=>{i
 soundButton.addEventListener('click',e=>{e.stopPropagation();playIntro()});
 bgm.addEventListener('playing',()=>{soundButton.hidden=true});
 playIntro();
+// WeChat can permit audio after its bridge is ready; other browsers use the visible button.
+document.addEventListener('WeixinJSBridgeReady',()=>{if(!started)playIntro()},{once:true});
 function startOpeningMusic(e){if(started||e.target.closest('#enter, #doorHotspot'))return;if(bgm.paused)playIntro()}
 document.addEventListener('pointerdown',startOpeningMusic);document.addEventListener('keydown',startOpeningMusic);
 document.addEventListener('night-ready-dawn',()=>{document.getElementById('dawnTint').style.opacity='.65'});
